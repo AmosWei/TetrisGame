@@ -4,62 +4,24 @@ public enum TetrominoType {
     I, J, L, O, S, T, Z;
 
     // the grid is 10*20
-    int getOccupied(int orientation) {
-        int initial = 0;
+    int[] getInitialOccupied() {
+        int[] initialWithPos;
         switch (this) {
-            case I: initial = 0b1111;
-            case J: initial = 0b1000000000111;
-            case L: initial = 0b10000000111;
-            case O: return 0b110000000011;      // no need to rotate
-            case S: initial = 0b110000000110;
-            case T: initial = 0b100000000111;
-            case Z: initial = 0b1100000000011;
+            case I: initialWithPos = new int[] {0, 1, 2, 3}; break;
+            case J: initialWithPos = new int[] {0, 1, 2,
+                                                      12}; break;
+            case L: initialWithPos = new int[] {0, 1, 2,
+                                                10}; break;
+            case O: initialWithPos = new int[] {0, 1,
+                                                10, 11}; break;
+            case S: initialWithPos = new int[] {1, 2,
+                                            10, 11}; break;
+            case T: initialWithPos = new int[] {0, 1, 2,
+                                                   11}; break;
+            case Z: initialWithPos = new int[] {0, 1,
+                                                   11, 12}; break;
+            default: initialWithPos = null;
         }
-        return rotate(initial, orientation);
-    }
-
-    // return the index of center
-    int getCenter() {
-        switch (this) {
-            case I: return 2;
-            case J: return 2;
-            case L: return 0;
-            case O: return 0;
-            case S: return 1;
-            case T: return 1;
-            case Z: return 1;
-            default: return -1;
-        }
-    }
-
-    private int rotateOnce(int initial) {
-        int rotated = 0;
-        for (int index = 0; initial != 0; index++) {
-            if ((initial & 1) == 0)
-                continue;
-            int center = getCenter();
-            int x = getX(center, index);
-            int y = getY(center, index);
-            int newX = -y;
-            int newY = -x;
-            int newIndex = (newX+center/10)*10 + (newY+center%10);
-            rotated |= (1 << newIndex);
-        }
-        return rotated;
-    }
-
-    private int rotate(int initial, int orientation) {
-        int rotated = initial;
-        for (int i = 0; i < orientation; i++)
-            rotated = rotateOnce(rotated);
-        return rotated;
-    }
-
-    private int getX(int center, int i) {
-        return i/10 - center/10;
-    }
-
-    private int getY(int center, int i) {
-        return i%10 - center%10;
+        return initialWithPos;
     }
 }

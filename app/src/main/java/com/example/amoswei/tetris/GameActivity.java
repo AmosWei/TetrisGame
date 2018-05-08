@@ -1,4 +1,4 @@
 package com.example.amoswei.tetris;
 
-public class Tetrominos {
+public class GameActivity {
 }
