@@ -3,6 +3,7 @@
 
 A simple Tetris game, Use Android to implentment.
 
+![Tetris from wikipedia](https://en.wikipedia.org/wiki/Tetris#/media/File:NES_Tetris_Box_Front.jpg)
 
 ## Getting Started
 
@@ -73,5 +74,5 @@ Null
 
 ## Reference
 
-* Wikipedia -[Tetris](https://en.wikipedia.org/wiki/Tetris)
+* Wikipedia - [Tetris](https://en.wikipedia.org/wiki/Tetris)
 
