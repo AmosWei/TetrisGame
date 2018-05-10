@@ -10,11 +10,13 @@ public class Tetromino {
     private boolean moving = true;
     private int[] occupied = new int[4];
     private boolean stop = false;
+    private Tetris game;
 
-    Tetromino(TetrominoType type, int orientation, int color) {
+    Tetromino(TetrominoType type, int orientation, int color, Tetris game) {
         if (type == TetrominoType.I && orientation == 1) orientation = 3;
         this.orientation = orientation;
         this.color = color;
+        this.game = game;
         occupied = type.getInitialOccupied();
         for (int i = 0; i < this.orientation; i++)
             occupied = rotate(occupied);
@@ -44,15 +46,16 @@ public class Tetromino {
         }
     }
 
-    // set orientation field as well
+    // set "orientation" field as well
     // this is to be called by other class
-    public int[] setRotate(int[] occupied) {
+    public void setRotate() {
         orientation = (orientation+1)%3;
-        return rotate(occupied);
+        occupied = rotate(occupied);
     }
 
     // rotate once
     // need to check bound (and move left/right to adjust)
+    // need to check whether obstructed by other stopped position (if not, rotate once more)
     private int[] rotate(int[] occupied) {
         int[] newOccupied = new int[4];
         int centerX = occupied[1]%10;
@@ -67,7 +70,11 @@ public class Tetromino {
         }
         if (move == 2) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]+1;
         if (move == 1) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]-1;
-        return newOccupied;
+        boolean canRotate = true;
+        for (int i: newOccupied)
+            if (game.getStoppedOnBoard()[i] != -1)
+                canRotate = false;
+        return canRotate ? newOccupied : rotate(newOccupied);
     }
 
     // make sure when the tetromino firstly comes out, only the bottem line is on board
@@ -82,60 +89,72 @@ public class Tetromino {
 
     // when users press move left button, tetromino should be moved left
     // need to check whether it's already left most
-    public int[] moveLeft(int[] occupied) {
+    // need to check whether obstructed by other stopped position
+    public void moveLeft() {
         int[] newOccupied = new int[4];
         boolean dontmove = false;
         for (int i: occupied) {
             int iX = i%10;
             int iY = i/10;
-            if (iX == 0) {
+            if (iX == 0 || game.getStoppedOnBoard()[i-1]!=-1) {
                 dontmove = true;
                 break;
             }
         }
-        if (dontmove) return occupied;
+        if (dontmove) return;
         for (int i = 0; i < 4; i++) newOccupied[i] = occupied[i]-1;
-        return newOccupied;
+        occupied = newOccupied;
     }
 
     // similar to the above method
-    public int[] moveRight(int[] occupied) {
+    public void moveRight() {
         int[] newOccupied = new int[4];
         boolean dontmove = false;
         for (int i: occupied) {
             int iX = i%10;
             int iY = i/10;
-            if (iX == 9) {
+            if (iX == 9 || game.getStoppedOnBoard()[i+1]!=-1) {
                 dontmove = true;
                 break;
             }
         }
-        if (dontmove) return occupied;
+        if (dontmove) return;
         for (int i = 0; i < 4; i++) newOccupied[i] = occupied[i]+1;
-        return newOccupied;
+        occupied = newOccupied;
     }
 
     // move down (need to check if it needs to stop)
     // return the moved position array
-    public int[] moveDown(int[] occupied, Tetris game) {
-        for (int i: occupied) {
-            if (game.getTopOfEachCol()[i&10] == i/10+1) {
-                stop = true;
-                break;
-            }
-        }
+    public void moveDown() {
+        checkStop();
         for (int i = 0; i < 4 && !stop; i++)
             occupied[i] += 10;
-        return occupied;
     }
 
     // move down once to the most bottom position it can be in
-    public int[] moveDownFast(int[] occupied, Tetris game) {
-        occupied = moveDown(occupied, game);
-        return null;
+    public void moveDownFast() {
+        while (!stop)
+            moveDown();
+    }
+
+    private void checkStop() {
+        for (int i: occupied) {
+            if (game.getTopOfEachCol()[i&10] == i/10+1) {
+                stop = true;
+                return;
+            }
+        }
     }
 
     public int[] getOccupied() {
         return occupied;
+    }
+
+    public boolean getStop() {
+        return stop;
+    }
+
+    public int getColor() {
+        return color;
     }
 }
