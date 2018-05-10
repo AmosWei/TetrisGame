@@ -66,12 +66,12 @@ Null
 
 ## Authors
 
-* ** JiaWen He u6227591
-* ** Wangchao Wei u6263937
-* ** Yilu Liu u6270742
+*  JiaWen He u6227591
+*  Wangchao Wei u6263937
+*  Yilu Liu u6270742
 
 
-## Acknowledgments
+## Reference
 
-* Wikipedia
+* Wikipedia -[Tetris](https://en.wikipedia.org/wiki/Tetris)
 
