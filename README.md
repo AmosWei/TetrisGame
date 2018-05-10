@@ -6,7 +6,7 @@ A simple Tetris game, Use Android to implentment.
 <p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/en/8/8d/NES_Tetris_Box_Front.jpg" width="350"/>
 </p>
-Picture from wikipeida
+Picture from [wikipeida](https://en.wikipedia.org/wiki/Tetris)
 
 ## Getting Started
 
