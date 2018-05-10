@@ -1,29 +1,59 @@
 package com.example.amoswei.tetris;
 
-import android.graphics.Color;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 
 public class Tetromino {
-    private TetrominoType type;
     private int orientation;
     private int position = 4;
     private int color;
     private boolean moving = true;
     private int[] occupied = new int[4];
+    private boolean stop = false;
 
     Tetromino(TetrominoType type, int orientation, int color) {
         if (type == TetrominoType.I && orientation == 1) orientation = 3;
-        this.type = type;
         this.orientation = orientation;
         this.color = color;
         occupied = type.getInitialOccupied();
-        for (int i = 0; i < orientation; i++)
+        for (int i = 0; i < this.orientation; i++)
             occupied = rotate(occupied);
         occupied = setStart(occupied);
     }
 
+    // draw the Tetromino
+    public void draw(Canvas c) {
+        Paint p = new Paint();
+        p.setColor(color);
+        p.setStyle(Paint.Style.FILL);
+
+        int h = c.getHeight();
+        int w = c.getWidth();
+
+        float topEdge = (float) (h%0.2);
+        float leftEdge = (float) (w*0.1);
+        float hBoard = (float) (h*0.7);
+        float wBoard = hBoard/2;
+        float side = wBoard/10;
+
+        for (int i: occupied) {
+            double x = i%10;
+            double y = i/10;
+            c.drawRect((float)x*side+leftEdge, (float)y*side+topEdge,
+                    (float)x*side+leftEdge+side, (float)y*side+topEdge+side, p);
+        }
+    }
+
+    // set orientation field as well
+    // this is to be called by other class
+    public int[] setRotate(int[] occupied) {
+        orientation = (orientation+1)%3;
+        return rotate(occupied);
+    }
+
     // rotate once
     // need to check bound (and move left/right to adjust)
-    public int[] rotate(int[] occupied) {
+    private int[] rotate(int[] occupied) {
         int[] newOccupied = new int[4];
         int centerX = occupied[1]%10;
         int centerY = occupied[1]/10;
@@ -85,10 +115,27 @@ public class Tetromino {
         return newOccupied;
     }
 
+    // move down (need to check if it needs to stop)
+    // return the moved position array
     public int[] moveDown(int[] occupied, Tetris game) {
-        int[] newOccupied = new int[4];
-        boolean stop = false;
-        // TODO use game.stoppedOnBoard to judge if it should stop
+        for (int i: occupied) {
+            if (game.getTopOfEachCol()[i&10] == i/10+1) {
+                stop = true;
+                break;
+            }
+        }
+        for (int i = 0; i < 4 && !stop; i++)
+            occupied[i] += 10;
+        return occupied;
+    }
+
+    // move down once to the most bottom position it can be in
+    public int[] moveDownFast(int[] occupied, Tetris game) {
+        occupied = moveDown(occupied, game);
         return null;
+    }
+
+    public int[] getOccupied() {
+        return occupied;
     }
 }
