@@ -3,11 +3,10 @@
 
 A simple Tetris game, Use Android to implentment.
 
-![Tetris from wikipedia](https://upload.wikimedia.org/wikipedia/en/8/8d/NES_Tetris_Box_Front.jpg)
-
 <p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/en/8/8d/NES_Tetris_Box_Front.jpg" width="350"/>
 </p>
+Picture from wikipeida
 
 ## Getting Started
 
