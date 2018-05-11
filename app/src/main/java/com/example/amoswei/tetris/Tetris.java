@@ -22,8 +22,7 @@ public class Tetris {
 
     private Canvas c;
 
-    Tetris(Canvas c) {
-        this.c = c;
+    Tetris() {
         // initialize stoppedOnBoard and topOfEachCol
         for (int i = 0; i < 200; i++)
             stoppedOnBoard[i] = -1;
@@ -34,7 +33,11 @@ public class Tetris {
         triggerNextTetromino();
     }
 
-    // TODO notify GUI
+    public void draw(Canvas c) {
+        this.c = c;
+        // TODO draw background of board & buttons (might be pictures) & score & next
+    }
+
     void step() {
         current.moveDown();
         updateBoard();
