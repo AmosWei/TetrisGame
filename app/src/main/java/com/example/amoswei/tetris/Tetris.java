@@ -2,12 +2,13 @@ package com.example.amoswei.tetris;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Tetris {
+public class Tetris{
     // possible colors that can be randomly choose from
     private static ArrayList<Integer> colors = new ArrayList<>(Arrays.asList(Color.GREEN,
             Color.CYAN, Color.GREEN, Color.YELLOW, Color.RED));
@@ -19,6 +20,7 @@ public class Tetris {
 
     private Tetromino current;
     private Tetromino next;
+
 
     private Canvas c;
 
@@ -37,10 +39,25 @@ public class Tetris {
     // TODO draw background of board & buttons (might be pictures) & score & next
     // TODO draw stoppedOnBoard grids
     // draw current and next
+
     void draw(Canvas c) {
+        drawBackGround();
         this.c = c;
         current.draw(c);
         next.draw(c);
+    }
+
+    void drawBackGround() {
+        int h = c.getHeight();
+        int w = c.getWidth();
+
+        Paint background = new Paint();
+        Paint frame = new Paint();
+        background.setColor(Color.rgb(0, 0, 0));
+        frame.setColor(Color.rgb(255, 255, 255));
+        c.drawRect(0, 0, w, h, frame);
+        c.drawRect((float) 0.1 * w, (float) 0.1 * h,
+                (float) (0.1 * w + 0.35 * h), (float) 0.8 * h, background);
     }
 
     void step() {
