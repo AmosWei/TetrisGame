@@ -33,9 +33,14 @@ public class Tetris {
         triggerNextTetromino();
     }
 
-    public void draw(Canvas c) {
+    // to be called on each step (through view.invalidate())
+    // TODO draw background of board & buttons (might be pictures) & score & next
+    // TODO draw stoppedOnBoard grids
+    // draw current and next
+    void draw(Canvas c) {
         this.c = c;
-        // TODO draw background of board & buttons (might be pictures) & score & next
+        current.draw(c);
+        next.draw(c);
     }
 
     void step() {
@@ -45,12 +50,14 @@ public class Tetris {
             triggerNextTetromino();
     }
 
-    void triggerNextTetromino() {
+    private void triggerNextTetromino() {
+        updateBoard();
         eliminate();
+        updateTopOfEachCol();
         current = next;
+        current.setCurrent();         // set the current attribute of the current tetromino to true
         next = new Tetromino(TetrominoType.values()[rand.nextInt(TetrominoType.values().length)],
                 rand.nextInt(4), colors.get(rand.nextInt(colors.size())), this);
-        next.draw(c);
     }
 
     // event to be "rotate", "left", "right" or "faster" (0, 1, 2, 3)
@@ -74,7 +81,6 @@ public class Tetris {
 
     // update the stopped grid on board if some line(s) need to be eliminated
     // otherwise keep it the same
-    // TODO notify GUI
     private void eliminate() {
         for (int i = 0; i < 20; i++) {
             boolean allOccupied = true;
@@ -96,7 +102,7 @@ public class Tetris {
     }
 
     // update the top of each column (from the stopped on Board)
-    void updateTopOfEachCol() {
+    private void updateTopOfEachCol() {
         for (int i = 0; i < 200; i++) {
             if (i == -1) continue;
             int c = i%10;
@@ -105,11 +111,11 @@ public class Tetris {
         }
     }
 
-    public short[] getStoppedOnBoard() {
+    short[] getStoppedOnBoard() {
         return stoppedOnBoard;
     }
 
-    public int[] getTopOfEachCol() {
+    int[] getTopOfEachCol() {
         return topOfEachCol;
     }
 }
