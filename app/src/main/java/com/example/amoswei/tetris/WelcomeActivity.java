@@ -15,10 +15,8 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void playGame(View view) {
-        Log.d("game", "button clicked");
 
         Intent intent = new Intent(this, GameActivity.class);
-        Log.d("game", "intent created");
         startActivity(intent);
     }
 }

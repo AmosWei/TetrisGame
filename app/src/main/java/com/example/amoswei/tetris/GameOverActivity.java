@@ -14,7 +14,7 @@ public class GameOverActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameover);
 
-        TextView gameOverText = (TextView) findViewById(R.id.gameovermessage);
+        TextView gameOverText = findViewById(R.id.gameovermessage);
         gameOverText.setText(getIntent().getStringExtra(GAMEOVER_MESSAGE));
     }
 
