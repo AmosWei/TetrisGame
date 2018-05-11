@@ -36,10 +36,10 @@ public class Tetris{
     }
 
     // to be called on each step (through view.invalidate())
-    // TODO draw background of board & buttons (might be pictures) & score & next
+    // draw background of board
+    // TODO buttons (might be pictures) & score & next
     // TODO draw stoppedOnBoard grids
     // draw current and next
-
     void draw(Canvas c) {
         drawBackGround();
         this.c = c;
@@ -78,6 +78,7 @@ public class Tetris{
     }
 
     // event to be "rotate", "left", "right" or "faster" (0, 1, 2, 3)
+    // TODO use this method
     void updateBoardByEvent(short event) {
         if (event == 0)
             current.setRotate();
@@ -98,6 +99,7 @@ public class Tetris{
 
     // update the stopped grid on board if some line(s) need to be eliminated
     // otherwise keep it the same
+    // TODO score
     private void eliminate() {
         for (int i = 0; i < 20; i++) {
             boolean allOccupied = true;

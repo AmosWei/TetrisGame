@@ -7,7 +7,6 @@ public class Tetromino {
     private int orientation;
     private int position = 4;
     private int color;
-    private boolean moving = true;
     private int[] occupied = new int[4];
     private boolean stop = false;
     private Tetris game;
@@ -25,26 +24,40 @@ public class Tetromino {
     }
 
     // draw the Tetromino
-    // on-board if current == true; TODO off-board otherwise
-    public void draw(Canvas c) {
+    // on-board if current == true; off-board otherwise
+    void draw(Canvas c) {
         Paint p = new Paint();
         p.setColor(color);
         p.setStyle(Paint.Style.FILL);
+
+        int h = c.getHeight();
+        int w = c.getWidth();
+
+        float topEdge = (float) (h * 0.1);
+        float leftEdge = (float) (w * 0.1);
+        float hBoard = (float) (h * 0.7);
+        float wBoard = hBoard / 2;
+        float side = wBoard / 10;
+
         if (current) {
-            int h = c.getHeight();
-            int w = c.getWidth();
-
-            float topEdge = (float) (h * 0.1);
-            float leftEdge = (float) (w * 0.1);
-            float hBoard = (float) (h * 0.7);
-            float wBoard = hBoard / 2;
-            float side = wBoard / 10;
-
             for (int i : occupied)
                 drawGrid(c, i, side, leftEdge, topEdge, p);
-        }
-        else {
-
+        } else {
+            float rightPadding = (float) (w - 0.1*w - 0.7*h/2);
+            float centerNextX = rightPadding/2;
+            float centerNextY = (float) (0.3*h);
+            float hside = side/2;
+            int center = occupied[1];
+            int centerX = center%10;
+            int centerY = center/10;
+            for (int i: occupied) {
+                int iX = i%10;
+                int iY = i/10;
+                c.drawRect((iX-centerX)*side+centerNextX-hside,
+                        (iY-centerY)*side+centerNextY-hside,
+                        (iX-centerX)*side+centerNextX+hside,
+                        (iY-centerY)*side+centerNextY+hside, p);
+            }
         }
     }
 
@@ -106,12 +119,13 @@ public class Tetromino {
     }
 
     // make sure when the tetromino firstly comes out, only the bottem line is on board
+    // make sure they are in the center, not on the left
     // note: in GUI, all negative indices shoudn't be shown
     private int[] setStart(int[] occupied) {
         int lineTOReduce = occupied[0]/10;
         for (int i: occupied) if (i/10>lineTOReduce) lineTOReduce = i/10;
         for (int i = 0; i < occupied.length; i++)
-            occupied[i] = occupied[i] - lineTOReduce*10;
+            occupied[i] = occupied[i] - lineTOReduce*10 + 4;
         return occupied;
     }
 
