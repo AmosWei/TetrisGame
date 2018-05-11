@@ -11,6 +11,7 @@ public class Tetromino {
     private int[] occupied = new int[4];
     private boolean stop = false;
     private Tetris game;
+    private boolean current = false;
 
     Tetromino(TetrominoType type, int orientation, int color, Tetris game) {
         if (type == TetrominoType.I && orientation == 1) orientation = 3;
@@ -24,6 +25,7 @@ public class Tetromino {
     }
 
     // draw the Tetromino
+    // on-board if current == true; TODO off-board otherwise
     public void draw(Canvas c) {
         Paint p = new Paint();
         p.setColor(color);
@@ -38,17 +40,39 @@ public class Tetromino {
         float wBoard = hBoard/2;
         float side = wBoard/10;
 
-        for (int i: occupied) {
-            double x = i%10;
-            double y = i/10;
-            c.drawRect((float)x*side+leftEdge, (float)y*side+topEdge,
-                    (float)x*side+leftEdge+side, (float)y*side+topEdge+side, p);
-        }
+        for (int i: occupied)
+            drawGrid(c, i, side, leftEdge, topEdge, p);
+    }
+
+    void drawGrid(Canvas c, int i) {
+        Paint p = new Paint();
+        p.setColor(color);
+        p.setStyle(Paint.Style.FILL);
+
+        int h = c.getHeight();
+        int w = c.getWidth();
+
+        float topEdge = (float) (h%0.2);
+        float leftEdge = (float) (w*0.1);
+        float hBoard = (float) (h*0.7);
+        float wBoard = hBoard/2;
+        float side = wBoard/10;
+
+        drawGrid(c, i, side, leftEdge, topEdge, p);
+    }
+
+    // pass in more arguments (actually can be inferred from c, but can reduce duplicate)
+    private void drawGrid(Canvas c, int i, float side, float leftEdge, float topEdge, Paint p) {
+        if (i < 0) return;
+        double x = i%10;
+        double y = i/10;
+        c.drawRect((float)x*side+leftEdge, (float)y*side+topEdge,
+                (float)x*side+leftEdge+side, (float)y*side+topEdge+side, p);
     }
 
     // set "orientation" field as well
     // this is to be called by other class
-    public void setRotate() {
+    void setRotate() {
         orientation = (orientation+1)%3;
         occupied = rotate(occupied);
     }
@@ -79,7 +103,7 @@ public class Tetromino {
 
     // make sure when the tetromino firstly comes out, only the bottem line is on board
     // note: in GUI, all negative indices shoudn't be shown
-    public int[] setStart(int[] occupied) {
+    private int[] setStart(int[] occupied) {
         int lineTOReduce = occupied[0]/10;
         for (int i: occupied) if (i/10>lineTOReduce) lineTOReduce = i/10;
         for (int i = 0; i < occupied.length; i++)
@@ -90,12 +114,11 @@ public class Tetromino {
     // when users press move left button, tetromino should be moved left
     // need to check whether it's already left most
     // need to check whether obstructed by other stopped position
-    public void moveLeft() {
+    void moveLeft() {
         int[] newOccupied = new int[4];
         boolean dontmove = false;
         for (int i: occupied) {
             int iX = i%10;
-            int iY = i/10;
             if (iX == 0 || game.getStoppedOnBoard()[i-1]!=-1) {
                 dontmove = true;
                 break;
@@ -107,12 +130,11 @@ public class Tetromino {
     }
 
     // similar to the above method
-    public void moveRight() {
+    void moveRight() {
         int[] newOccupied = new int[4];
         boolean dontmove = false;
         for (int i: occupied) {
             int iX = i%10;
-            int iY = i/10;
             if (iX == 9 || game.getStoppedOnBoard()[i+1]!=-1) {
                 dontmove = true;
                 break;
@@ -125,14 +147,14 @@ public class Tetromino {
 
     // move down (need to check if it needs to stop)
     // return the moved position array
-    public void moveDown() {
+    void moveDown() {
         checkStop();
         for (int i = 0; i < 4 && !stop; i++)
             occupied[i] += 10;
     }
 
     // move down once to the most bottom position it can be in
-    public void moveDownFast() {
+    void moveDownFast() {
         while (!stop)
             moveDown();
     }
@@ -146,15 +168,20 @@ public class Tetromino {
         }
     }
 
-    public int[] getOccupied() {
+    int[] getOccupied() {
         return occupied;
     }
 
-    public boolean getStop() {
+    boolean getStop() {
         return stop;
     }
 
     public int getColor() {
         return color;
+    }
+
+    // set current to true (when "current = next;" in game)
+    void setCurrent() {
+        current = true;
     }
 }
