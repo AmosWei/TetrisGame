@@ -30,18 +30,22 @@ public class Tetromino {
         Paint p = new Paint();
         p.setColor(color);
         p.setStyle(Paint.Style.FILL);
+        if (current) {
+            int h = c.getHeight();
+            int w = c.getWidth();
 
-        int h = c.getHeight();
-        int w = c.getWidth();
+            float topEdge = (float) (h * 0.1);
+            float leftEdge = (float) (w * 0.1);
+            float hBoard = (float) (h * 0.7);
+            float wBoard = hBoard / 2;
+            float side = wBoard / 10;
 
-        float topEdge = (float) (h%0.2);
-        float leftEdge = (float) (w*0.1);
-        float hBoard = (float) (h*0.7);
-        float wBoard = hBoard/2;
-        float side = wBoard/10;
+            for (int i : occupied)
+                drawGrid(c, i, side, leftEdge, topEdge, p);
+        }
+        else {
 
-        for (int i: occupied)
-            drawGrid(c, i, side, leftEdge, topEdge, p);
+        }
     }
 
     void drawGrid(Canvas c, int i) {
