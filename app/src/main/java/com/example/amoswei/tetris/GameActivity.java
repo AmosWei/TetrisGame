@@ -8,7 +8,7 @@ public class GameActivity extends AppCompatActivity implements GameOver {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tetris);
-        TetrisView tetrisView = (TetrisView) findViewById(R.id.tetrisview);
+        TetrisView tetrisView = findViewById(R.id.tetrisview);
         tetrisView.registerGameOver(this);
     }
 
