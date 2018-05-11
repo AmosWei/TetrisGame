@@ -11,4 +11,10 @@ public class GameActivity extends AppCompatActivity implements GameOver {
         TetrisView tetrisView = (TetrisView) findViewById(R.id.tetrisview);
         tetrisView.registerGameOver(this);
     }
+
+    @Override
+    public void gameOver() {
+        setResult(AppCompatActivity.RESULT_OK);
+        finish();
+    }
 }
