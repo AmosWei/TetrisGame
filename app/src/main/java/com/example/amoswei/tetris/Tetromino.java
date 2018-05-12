@@ -37,9 +37,9 @@ public class Tetromino {
         int h = c.getHeight();
         int w = c.getWidth();
 
-        float topEdge = (float) (h * 0.03);
-        float leftEdge = (float) (w * 0.01);
-        float hBoard = (float) (h * 0.88);
+        float topEdge = (float) 0;
+        float leftEdge = (float) 0;
+        float hBoard = (float) (h * 0.9);
         float wBoard = hBoard / 2;
         float side = wBoard / 10;
 
@@ -78,9 +78,9 @@ public class Tetromino {
         int h = c.getHeight();
         int w = c.getWidth();
 
-        float topEdge = (float) (h*0.03);
-        float leftEdge = (float) (w*0.01);
-        float hBoard = (float) (h*0.88);
+        float topEdge = (float) 0;
+        float leftEdge = (float) 0;
+        float hBoard = (float) 0.9;
         float wBoard = hBoard/2;
         float side = wBoard/10;
 
@@ -132,11 +132,19 @@ public class Tetromino {
     // make sure when the tetromino firstly comes out, only the bottem line is on board
     // make sure they are in the center, not on the left
     // note: in GUI, all negative indices shoudn't be shown
+    // TODO adjust to center
     private int[] setStart(int[] occupied) {
         int lineTOReduce = occupied[0]/10;
         for (int i: occupied) if (i/10>lineTOReduce) lineTOReduce = i/10;
-        for (int i = 0; i < occupied.length; i++)
-            occupied[i] = occupied[i] - lineTOReduce*10 + 3;
+        boolean has4 = false;
+        boolean has5 = false;
+        for (int i = 0; i < 4; i++) {
+            if ((occupied[i]+30)%10 == 4) has4 = true;
+            if ((occupied[i]+30)%10 == 5) has5 = true;
+            occupied[i] = occupied[i] - lineTOReduce * 10 + 3;
+        }
+        if (has4 && !has5) for (int i = 0; i < 4; i++) occupied[i] += 1;
+        if (!has4 && has5) for (int i = 0; i < 4; i++) occupied[i] -= 1;
         return occupied;
     }
 
