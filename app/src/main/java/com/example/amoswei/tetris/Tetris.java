@@ -3,6 +3,7 @@ package com.example.amoswei.tetris;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +17,7 @@ public class Tetris{
     private static Random rand = new Random();
 
     private short[] stoppedOnBoard = new short[200];  // element as color, -1 if nothing there
-    private int[] topOfEachCol = new int[10];   // -1 if nothing in this column
+    private int[] topOfEachCol = {20, 20, 20, 20, 20, 20, 20, 20, 20, 20};   // 20 if nothing in this column
 
     private Tetromino current;
     private Tetromino next;
@@ -32,7 +33,7 @@ public class Tetris{
         for (int i = 0; i < 200; i++)
             stoppedOnBoard[i] = -1;
         for (int i = 0; i < 10; i++)
-            topOfEachCol[i] = -1;
+            topOfEachCol[i] = 20;
         next = new Tetromino(TetrominoType.values()[rand.nextInt(TetrominoType.values().length)],
                 rand.nextInt(4), colors.get(rand.nextInt(colors.size())), this);
         triggerNextTetromino();
@@ -75,6 +76,7 @@ public class Tetris{
     private void triggerNextTetromino() {
         eliminate();
         updateTopOfEachCol();
+        Log.d("tetris", next.toString());
         current = next;
         current.setCurrent();         // set the current attribute of the current tetromino to true
         next = new Tetromino(TetrominoType.values()[rand.nextInt(TetrominoType.values().length)],
@@ -105,6 +107,7 @@ public class Tetris{
     // update the stopped grid on board if some line(s) need to be eliminated
     // otherwise keep it the same
     // add score = (lines to be eliminated) ^ 2
+    // TODO set to initial value if the column has no grid occupied
     private void eliminate() {
         int eliminatedCount = 0;
         for (int i = 0; i < 20; i++) {
@@ -131,14 +134,15 @@ public class Tetris{
     // update the top of each column (from the stopped on Board)
     // set over attribute to true if game over
     private void updateTopOfEachCol() {
-        for (int i = 0; i < 200; i++) {
-            if (i == -1) continue;
+        if (current == null) return;
+        for (int i: current.getOccupied()) {
+            if (i < 0) continue;
             int c = i%10;
             if (topOfEachCol[c] > i/10)
                 topOfEachCol[c] = i/10;
         }
         for (int i: topOfEachCol)
-            if (i < 10)
+            if (i == 0)
                 over = true;
     }
 
@@ -147,6 +151,8 @@ public class Tetris{
     }
 
     int[] getTopOfEachCol() {
+        for (int i: topOfEachCol)
+            Log.d("game", Integer.toString(i));
         return topOfEachCol;
     }
 

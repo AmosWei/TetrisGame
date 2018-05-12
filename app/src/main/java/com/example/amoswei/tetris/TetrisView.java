@@ -37,8 +37,8 @@ public class TetrisView extends View implements Runnable{
         if (game.getOver()) {
             notifyGameOver();
             this.invalidate();
-            return true;
-        } return false;
+            return false;
+        } return true;
     }
 
     private void notifyGameOver() {

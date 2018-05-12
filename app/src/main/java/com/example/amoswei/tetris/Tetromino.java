@@ -2,8 +2,10 @@ package com.example.amoswei.tetris;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 
 public class Tetromino {
+    private TetrominoType tetrominoType;
     private int orientation;
     private int color;
     private int[] occupied = new int[4];
@@ -11,7 +13,14 @@ public class Tetromino {
     private Tetris game;
     private boolean current = false;
 
+    public String toString() {
+        return "Tetromino: " + tetrominoType.name() + " " + Integer.toString(orientation) + " " +
+                Integer.toString(color) + " " + occupied[0] + " " + occupied[1] + " " + occupied[2]
+                + " " + occupied[3] + " " + stop;
+    }
+
     Tetromino(TetrominoType type, int orientation, int color, Tetris game) {
+        this.tetrominoType = type;
         if (type == TetrominoType.I && orientation == 1) orientation = 3;
         this.orientation = orientation;
         this.color = color;
@@ -41,7 +50,8 @@ public class Tetromino {
         if (current) {
             for (int i : occupied)
                 drawGrid(c, i, side, leftEdge, topEdge, p);
-        } else {
+        }
+        else {
             float rightPadding = (float) (w - 0.1*w - 0.7*h/2);
             float centerNextX = rightPadding/2;
             float centerNextY = (float) (0.3*h);
@@ -151,6 +161,7 @@ public class Tetromino {
         checkStop();
         for (int i = 0; i < 4 && !stop; i++)
             occupied[i] += 10;
+        Log.d("game", this.toString());
     }
 
     // move down once to the most bottom position it can be in
@@ -161,9 +172,9 @@ public class Tetromino {
 
     private void checkStop() {
         for (int i: occupied) {
+            Log.d("game", Integer.toString(i) + " " + (i>=0?game.getTopOfEachCol()[i%10]:""));
             if (i >= 0 && game.getTopOfEachCol()[i%10] == i/10+1) {
                 stop = true;
-                return;
             }
         }
     }
@@ -184,4 +195,6 @@ public class Tetromino {
     void setCurrent() {
         current = true;
     }
+
+
 }
