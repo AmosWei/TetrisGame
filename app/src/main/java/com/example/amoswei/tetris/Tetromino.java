@@ -122,19 +122,27 @@ public class Tetromino {
     // need to check whether obstructed by other stopped position (if not, rotate once more)
     private int[] rotate(int[] occupied) {
         int[] newOccupied = new int[4];
-        int centerX = occupied[1]%10;
-        int centerY = occupied[1]/10;
-        int move = 0;  // 0 if not move; 1 if move left; 2 if move right
+        int centerX = (occupied[1]+30)%10;
+        int centerY = (occupied[1]+30)/10-3;
+        int move = 0; // 0 if not move; 1 if move left; 2 if move right;
+                      // 3 if move left twice; 4 if move right twice
         for (int i = 0; i < 4; i++) {
             int iX = ((occupied[i]+30)/10-3-centerY)+centerX; // iX and iY here are new positions (rotated)
             int iY = -((occupied[i]+30)%10-centerX)+centerY;
-            if (iX - centerX >= 6) move = 2;
-            if (centerX - iX >= 6) move = 1;
+            if (((iX<0?iX+10:iX)>9?((iX<0?iX+10:iX)-10):(iX<0?iX+10:iX)) - centerX >= 6) move = 2;
+            if (centerX - ((iX<0?iX+10:iX)>9?((iX<0?iX+10:iX)-10):(iX<0?iX+10:iX)) >= 6) move = 1;
+            Log.d("move option in rotate", Integer.toString(move) + " " + Integer.toString(centerX)
+            + " " + Integer.toString(iX));
             newOccupied[i] = iX + iY*10;
         }
+        // TODO move twice for I tetromino
         if (move == 2) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]+1;
         if (move == 1) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]-1;
         boolean canRotate = true;
+        Log.d("rotated option", Integer.toString(newOccupied[0]) + " " +
+                Integer.toString(newOccupied[1]) + " " +
+                Integer.toString(newOccupied[2]) + " " +
+                Integer.toString(newOccupied[3]));
         for (int i: newOccupied)
             if (i >= 0 && game.getStoppedOnBoard()[i] != -1)
                 canRotate = false;
@@ -185,7 +193,7 @@ public class Tetromino {
                 break;
             }
         }
-        Log.d("moveLeft", Boolean.toString(dontmove));
+        Log.d("dontmove(left)", Boolean.toString(dontmove));
         if (dontmove) return;
         for (int i = 0; i < 4; i++) newOccupied[i] = occupied[i]-1;
         occupied = newOccupied;
@@ -203,6 +211,7 @@ public class Tetromino {
                 break;
             }
         }
+        Log.d("dontmove(right)", Boolean.toString(dontmove));
         if (dontmove) return;
         for (int i = 0; i < 4; i++) newOccupied[i] = occupied[i]+1;
         occupied = newOccupied;
