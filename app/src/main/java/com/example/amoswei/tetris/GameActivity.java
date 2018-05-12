@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.TextView;
 
-import static com.example.amoswei.tetris.GameOverActivity.GAMEOVER_MESSAGE;
-import static com.example.amoswei.tetris.TetrisView.STEPDELAY;
 
 public class GameActivity extends AppCompatActivity implements GameOver {
     TetrisView tetrisView;
@@ -54,6 +51,7 @@ public class GameActivity extends AppCompatActivity implements GameOver {
     public void gameOver() {
         setResult(AppCompatActivity.RESULT_OK);
         Intent gameOverIntent = new Intent(this, GameOverActivity.class);
+        gameOverIntent.putExtra("Score", tetrisView.game.score);
         startActivity(gameOverIntent);
         finish();
     }
