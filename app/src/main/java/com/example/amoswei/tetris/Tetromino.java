@@ -95,7 +95,7 @@ public class Tetromino {
         if (move == 1) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]-1;
         boolean canRotate = true;
         for (int i: newOccupied)
-            if (game.getStoppedOnBoard()[i] != -1)
+            if (i >= 0 && game.getStoppedOnBoard()[i] != -1)
                 canRotate = false;
         return canRotate ? newOccupied : rotate(newOccupied);
     }
