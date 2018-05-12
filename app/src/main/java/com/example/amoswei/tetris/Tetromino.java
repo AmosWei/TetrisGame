@@ -177,6 +177,7 @@ public class Tetromino {
         int[] newOccupied = new int[4];
         boolean dontmove = false;
         for (int i: occupied) {
+            if (i < 0) continue;
             int iX = i%10;
             if (iX == 0 || game.getStoppedOnBoard()[i-1]!=-1) {
                 dontmove = true;
@@ -193,6 +194,7 @@ public class Tetromino {
         int[] newOccupied = new int[4];
         boolean dontmove = false;
         for (int i: occupied) {
+            if (i < 0) continue;
             int iX = i%10;
             if (iX == 9 || game.getStoppedOnBoard()[i+1]!=-1) {
                 dontmove = true;

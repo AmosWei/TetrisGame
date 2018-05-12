@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static android.support.v4.app.ActivityCompat.startActivity;
 
 public class TetrisView extends View implements Runnable{
-    public static final int STEPDELAY = 100;
+    public static final int STEPDELAY = 1000;
     Handler repaintHandler;
     Tetris game;
     ArrayList<GameOver> observers ;
