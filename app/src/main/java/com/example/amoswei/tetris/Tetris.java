@@ -89,7 +89,6 @@ public class Tetris{
     }
 
     // event to be "rotate", "left", "right" or "faster" (0, 1, 2, 3)
-    // TODO use this method
     void updateBoardByEvent(short event) {
         if (event == 0)
             current.setRotate();
@@ -129,10 +128,10 @@ public class Tetris{
                     stoppedOnBoard[i*10+j] = -1;
                 for (int j = 10; j < (i+1)*10; j++)         // move all above lines down
                     stoppedOnBoard[j] = stoppedOnBoard[j-10];
-                for (int j = 0; j < 10; j++)                // fill the first line as -1
-                    stoppedOnBoard[j] = -1;
             }
         }
+        for (int j = 0; j < 10; j++)                // fill the first line as -1
+            stoppedOnBoard[j] = -1;
         score += eliminatedCount*eliminatedCount;
     }
 
