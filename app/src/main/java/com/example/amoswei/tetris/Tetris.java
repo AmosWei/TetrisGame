@@ -23,6 +23,8 @@ public class Tetris{
 
     private int score;
 
+    private boolean over;
+
     private Canvas c;
 
     Tetris() {
@@ -35,6 +37,7 @@ public class Tetris{
                 rand.nextInt(4), colors.get(rand.nextInt(colors.size())), this);
         triggerNextTetromino();
         score = 0;
+        over = false;
     }
 
     // to be called on each step (through view.invalidate())
@@ -125,6 +128,7 @@ public class Tetris{
     }
 
     // update the top of each column (from the stopped on Board)
+    // set over attribute to true if game over
     private void updateTopOfEachCol() {
         for (int i = 0; i < 200; i++) {
             if (i == -1) continue;
@@ -132,6 +136,9 @@ public class Tetris{
             if (topOfEachCol[c] > i/10)
                 topOfEachCol[c] = i/10;
         }
+        for (int i: topOfEachCol)
+            if (i < 10)
+                over = true;
     }
 
     short[] getStoppedOnBoard() {
@@ -140,5 +147,9 @@ public class Tetris{
 
     int[] getTopOfEachCol() {
         return topOfEachCol;
+    }
+
+    boolean getOver() {
+        return over;
     }
 }
