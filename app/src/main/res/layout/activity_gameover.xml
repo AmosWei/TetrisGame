@@ -40,9 +40,11 @@
         app:layout_constraintStart_toStartOf="@+id/button2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-
-    <com.example.amoswei.tetris.GameOverActivity
-        android:id="@+id/gameovermessage"
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="-"
+        android:id="@+id/gameovermessage"
+        android:layout_gravity="center_horizontal" />
 </android.support.constraint.ConstraintLayout>
