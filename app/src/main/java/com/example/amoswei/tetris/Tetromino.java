@@ -21,10 +21,8 @@ public class Tetromino {
         this.color = color;
         this.game = game;
         occupied = type.getInitialOccupied();
-        Log.d("game", toString());
         for (int i = 0; i < this.orientation; i++) {
             occupied = rotate(occupied);
-            Log.d("game", toString());
         }
         occupied = setStart(occupied);
     }
@@ -39,9 +37,9 @@ public class Tetromino {
         int h = c.getHeight();
         int w = c.getWidth();
 
-        float topEdge = (float) (h * 0.1);
-        float leftEdge = (float) (w * 0.1);
-        float hBoard = (float) (h * 0.7);
+        float topEdge = (float) (h * 0.03);
+        float leftEdge = (float) (w * 0.01);
+        float hBoard = (float) (h * 0.88);
         float wBoard = hBoard / 2;
         float side = wBoard / 10;
 
@@ -49,15 +47,19 @@ public class Tetromino {
             for (int i : occupied)
                 drawGrid(c, i, side, leftEdge, topEdge, p);
         }
-        else {          // TODO position is wrong
-            float rightPadding = (float) (w - 0.1*w - 0.7*h/2);
-            float centerNextX = rightPadding/2;
+        else {
+            int[] next = new int[4];
+            for (int i = 0; i < 4; i++)
+                next[i] = occupied[i]+30;
+            float rightPadding = w - leftEdge - wBoard;
+            float centerNextX = w-rightPadding/2;
             float centerNextY = (float) (0.3*h);
+            side *= 0.7;
             float hside = side/2;
-            int center = occupied[1];
+            int center = next[1];
             int centerX = center%10;
             int centerY = center/10;
-            for (int i: occupied) {
+            for (int i: next) {
                 int iX = i%10;
                 int iY = i/10;
                 c.drawRect((iX-centerX)*side+centerNextX-hside,
@@ -76,9 +78,9 @@ public class Tetromino {
         int h = c.getHeight();
         int w = c.getWidth();
 
-        float topEdge = (float) (h*0.1);
-        float leftEdge = (float) (w*0.1);
-        float hBoard = (float) (h*0.7);
+        float topEdge = (float) (h*0.03);
+        float leftEdge = (float) (w*0.01);
+        float hBoard = (float) (h*0.88);
         float wBoard = hBoard/2;
         float side = wBoard/10;
 

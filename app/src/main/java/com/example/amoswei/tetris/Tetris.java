@@ -68,8 +68,8 @@ public class Tetris{
         background.setColor(Color.rgb(0, 0, 0));
         frame.setColor(Color.rgb(255, 255, 255));
         c.drawRect(0, 0, w, h, frame);
-        c.drawRect((float) 0.1 * w, (float) 0.1 * h,
-                (float) (0.1 * w + 0.35 * h), (float) 0.8 * h, background);
+        c.drawRect((float) 0.01 * w, (float) 0.03 * h,
+                (float) (0.01 * w + 0.44 * h), (float) 0.91 * h, background);
     }
 
     void step() {
@@ -82,7 +82,6 @@ public class Tetris{
         updateBoard();
         eliminate();
         updateTopOfEachCol();
-        Log.d("tetris", next.toString());
         current = next;
         current.setCurrent();         // set the current attribute of the current tetromino to true
         next = new Tetromino(TetrominoType.values()[rand.nextInt(TetrominoType.values().length)],
