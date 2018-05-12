@@ -130,7 +130,7 @@ public class Tetris{
                     stoppedOnBoard[j] = stoppedOnBoard[j-10];
             }
         }
-        for (int j = 0; j < 10; j++)                // fill the first line as -1
+        for (int j = 0; j < eliminatedCount*10; j++)                // fill the first line as -1
             stoppedOnBoard[j] = -1;
         score += eliminatedCount*eliminatedCount;
     }
