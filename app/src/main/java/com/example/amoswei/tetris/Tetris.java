@@ -21,6 +21,7 @@ public class Tetris{
     private Tetromino current;
     private Tetromino next;
 
+    private int score;
 
     private Canvas c;
 
@@ -33,11 +34,12 @@ public class Tetris{
         next = new Tetromino(TetrominoType.values()[rand.nextInt(TetrominoType.values().length)],
                 rand.nextInt(4), colors.get(rand.nextInt(colors.size())), this);
         triggerNextTetromino();
+        score = 0;
     }
 
     // to be called on each step (through view.invalidate())
     // draw background of board
-    // TODO buttons (might be pictures) & score & next
+    // TODO buttons (might be pictures) & score
     // TODO draw stoppedOnBoard grids
     // draw current and next
     void draw(Canvas c) {
@@ -68,7 +70,6 @@ public class Tetris{
     }
 
     private void triggerNextTetromino() {
-        updateBoard();
         eliminate();
         updateTopOfEachCol();
         current = next;
@@ -99,8 +100,9 @@ public class Tetris{
 
     // update the stopped grid on board if some line(s) need to be eliminated
     // otherwise keep it the same
-    // TODO score
+    // add score = (lines to be eliminated) ^ 2
     private void eliminate() {
+        int eliminatedCount = 0;
         for (int i = 0; i < 20; i++) {
             boolean allOccupied = true;
             for (int j = 0; j < 10; j++) {
@@ -110,6 +112,7 @@ public class Tetris{
                 }
             }
             if (allOccupied) {          // need to eliminate
+                eliminatedCount++;
                 for (int j = 0; j < 10; j++)        // eliminate line i
                     stoppedOnBoard[i*10+j] = -1;
                 for (int j = 10; j < (i+1)*10; j++)         // move all above lines down
@@ -118,6 +121,7 @@ public class Tetris{
                     stoppedOnBoard[j] = -1;
             }
         }
+        score += eliminatedCount*eliminatedCount;
     }
 
     // update the top of each column (from the stopped on Board)

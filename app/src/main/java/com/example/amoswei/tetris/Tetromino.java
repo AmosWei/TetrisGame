@@ -5,7 +5,6 @@ import android.graphics.Paint;
 
 public class Tetromino {
     private int orientation;
-    private int position = 4;
     private int color;
     private int[] occupied = new int[4];
     private boolean stop = false;
@@ -59,23 +58,6 @@ public class Tetromino {
                         (iY-centerY)*side+centerNextY+hside, p);
             }
         }
-    }
-
-    void drawGrid(Canvas c, int i) {
-        Paint p = new Paint();
-        p.setColor(color);
-        p.setStyle(Paint.Style.FILL);
-
-        int h = c.getHeight();
-        int w = c.getWidth();
-
-        float topEdge = (float) (h%0.2);
-        float leftEdge = (float) (w*0.1);
-        float hBoard = (float) (h*0.7);
-        float wBoard = hBoard/2;
-        float side = wBoard/10;
-
-        drawGrid(c, i, side, leftEdge, topEdge, p);
     }
 
     // pass in more arguments (actually can be inferred from c, but can reduce duplicate)
