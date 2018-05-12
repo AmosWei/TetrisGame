@@ -98,7 +98,8 @@ public class Tetris{
     private void updateBoard() {
         int[] currentOccupied = current.getOccupied();
         for (int i: currentOccupied)
-            stoppedOnBoard[i] = (short) current.getColor();
+            if (i >= 0)
+                stoppedOnBoard[i] = (short) current.getColor();
     }
 
     // update the stopped grid on board if some line(s) need to be eliminated
