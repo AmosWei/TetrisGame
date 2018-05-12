@@ -34,9 +34,9 @@ public class TetrisView extends View implements Runnable{
     // step the view forward by one step - true is returned if more steps to go
     public boolean step() {
         game.step();
+        this.invalidate();
         if (game.getOver()) {
             notifyGameOver();
-            this.invalidate();
             return false;
         } return true;
     }

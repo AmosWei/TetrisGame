@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+import static com.example.amoswei.tetris.Tetromino.drawGrid;
+
 public class Tetris{
     // possible colors that can be randomly choose from
     private static ArrayList<Integer> colors = new ArrayList<>(Arrays.asList(Color.GREEN,
@@ -16,13 +18,13 @@ public class Tetris{
 
     private static Random rand = new Random();
 
-    private short[] stoppedOnBoard = new short[200];  // element as color, -1 if nothing there
+    private int[] stoppedOnBoard = new int[200];  // element as color, -1 if nothing there
     private int[] topOfEachCol = {20, 20, 20, 20, 20, 20, 20, 20, 20, 20};   // 20 if nothing in this column
 
     private Tetromino current;
     private Tetromino next;
 
-    private int score;
+    int score;
 
     private boolean over;
 
@@ -49,6 +51,10 @@ public class Tetris{
     void draw(Canvas c) {
         this.c = c;
         drawBackGround();
+        for (int i = 0; i < 200; i++) {
+            if (stoppedOnBoard[i] == -1) continue;
+            drawGrid(c, i, stoppedOnBoard[i]);
+        }
         current.draw(c);
         next.draw(c);
     }
@@ -68,12 +74,12 @@ public class Tetris{
 
     void step() {
         current.moveDown();
-        updateBoard();
         if (current.getStop())
             triggerNextTetromino();
     }
 
     private void triggerNextTetromino() {
+        updateBoard();
         eliminate();
         updateTopOfEachCol();
         Log.d("tetris", next.toString());
@@ -98,10 +104,11 @@ public class Tetris{
 
     // update the stopped grid on board based on current Tetromino (which just stops)
     private void updateBoard() {
+        if (current == null) return;
         int[] currentOccupied = current.getOccupied();
         for (int i: currentOccupied)
             if (i >= 0)
-                stoppedOnBoard[i] = (short) current.getColor();
+                stoppedOnBoard[i] = current.getColor();
     }
 
     // update the stopped grid on board if some line(s) need to be eliminated
@@ -146,13 +153,11 @@ public class Tetris{
                 over = true;
     }
 
-    short[] getStoppedOnBoard() {
+    int[] getStoppedOnBoard() {
         return stoppedOnBoard;
     }
 
     int[] getTopOfEachCol() {
-        for (int i: topOfEachCol)
-            Log.d("game", Integer.toString(i));
         return topOfEachCol;
     }
 

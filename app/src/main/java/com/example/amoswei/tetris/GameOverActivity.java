@@ -13,14 +13,8 @@ public class GameOverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameover);
-
-        TextView gameOverText = (TextView) findViewById(R.id.gameovermessage);
-        gameOverText.setText(getIntent().getStringExtra(GAMEOVER_MESSAGE));
-
-        TextView scoreLabel = (TextView) findViewById(R.id.scoreLabel);
-
-        int score = getIntent().getIntExtra("Score", 0);
-        scoreLabel.setText(score + "");
+//        TextView gameOverText = (TextView) findViewById(R.id.gameovermessage);
+//        gameOverText.setText(getIntent().getStringExtra(GAMEOVER_MESSAGE));
     }
 
     public void playAgain(View v) {
