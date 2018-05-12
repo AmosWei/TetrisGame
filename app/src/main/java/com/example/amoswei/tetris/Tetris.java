@@ -126,7 +126,7 @@ public class Tetris{
                 eliminatedCount++;
                 for (int j = 0; j < 10; j++)        // eliminate line i
                     stoppedOnBoard[i*10+j] = -1;
-                for (int j = 10; j < (i+1)*10; j++)         // move all above lines down
+                for (int j = 10*(i+1)-1; j >= 10; j--)         // move all above lines down
                     stoppedOnBoard[j] = stoppedOnBoard[j-10];
             }
         }

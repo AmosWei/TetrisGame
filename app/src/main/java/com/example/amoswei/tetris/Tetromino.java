@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
 
 public class Tetromino {
     private TetrominoType tetrominoType;
@@ -184,6 +185,7 @@ public class Tetromino {
                 break;
             }
         }
+        Log.d("moveLeft", Boolean.toString(dontmove));
         if (dontmove) return;
         for (int i = 0; i < 4; i++) newOccupied[i] = occupied[i]-1;
         occupied = newOccupied;
