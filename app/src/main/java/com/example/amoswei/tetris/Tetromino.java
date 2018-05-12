@@ -1,7 +1,9 @@
 package com.example.amoswei.tetris;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 
 public class Tetromino {
     private TetrominoType tetrominoType;
@@ -29,9 +31,12 @@ public class Tetromino {
     // draw the Tetromino
     // on-board if current == true; off-board otherwise
     void draw(Canvas c) {
-        Paint p = new Paint();
-        p.setColor(color);
-        p.setStyle(Paint.Style.FILL);
+        Paint p1 = new Paint();
+        p1.setStyle(Paint.Style.FILL);
+        p1.setColor(color);
+        Paint p2 = new Paint();
+        p2.setStyle(Paint.Style.STROKE);
+        p2.setColor(Color.GRAY);
 
         int h = c.getHeight();
         int w = c.getWidth();
@@ -44,7 +49,7 @@ public class Tetromino {
 
         if (current) {
             for (int i : occupied)
-                drawGrid(c, i, side, leftEdge, topEdge, p);
+                drawGrid(c, i, side, leftEdge, topEdge, p1, p2);
         }
         else {
             int[] next = new int[4];
@@ -61,18 +66,23 @@ public class Tetromino {
             for (int i: next) {
                 int iX = i%10;
                 int iY = i/10;
-                c.drawRect((iX-centerX)*side+centerNextX-hside,
+                RectF rect = new RectF((iX-centerX)*side+centerNextX-hside,
                         (iY-centerY)*side+centerNextY-hside,
                         (iX-centerX)*side+centerNextX+hside,
-                        (iY-centerY)*side+centerNextY+hside, p);
+                        (iY-centerY)*side+centerNextY+hside);
+                c.drawRoundRect(rect, 10, 10, p1);
+                c.drawRoundRect(rect, 10, 10, p2);
             }
         }
     }
 
     static void drawGrid(Canvas c, int i, int color) {
-        Paint p = new Paint();
-        p.setColor(color);
-        p.setStyle(Paint.Style.FILL);
+        Paint p1 = new Paint();
+        p1.setStyle(Paint.Style.FILL);
+        p1.setColor(color);
+        Paint p2 = new Paint();
+        p2.setStyle(Paint.Style.STROKE);
+        p2.setColor(Color.DKGRAY);
 
         int h = c.getHeight();
         int w = c.getWidth();
@@ -83,17 +93,19 @@ public class Tetromino {
         float wBoard = hBoard/2;
         float side = wBoard/10;
 
-        drawGrid(c, i, side, leftEdge, topEdge, p);
+        drawGrid(c, i, side, leftEdge, topEdge, p1, p2);
     }
 
 
     // pass in more arguments (actually can be inferred from c, but can reduce duplicate)
-    private static void drawGrid(Canvas c, int i, float side, float leftEdge, float topEdge, Paint p) {
+    private static void drawGrid(Canvas c, int i, float side, float leftEdge, float topEdge, Paint p1, Paint p2) {
         if (i < 0) return;
         double x = i%10;
         double y = i/10;
-        c.drawRect((float)x*side+leftEdge, (float)y*side+topEdge,
-                (float)x*side+leftEdge+side, (float)y*side+topEdge+side, p);
+        RectF rect = new RectF((float)x*side+leftEdge, (float)y*side+topEdge,
+                (float)x*side+leftEdge+side, (float)y*side+topEdge+side);
+        c.drawRoundRect(rect, 10, 10, p1);
+        c.drawRoundRect(rect, 10, 10, p2);
     }
 
     // set "orientation" field as well
@@ -131,23 +143,28 @@ public class Tetromino {
     // make sure when the tetromino firstly comes out, only the bottem line is on board
     // make sure they are in the center, not on the left
     // note: in GUI, all negative indices shoudn't be shown
-    // TODO adjust to center
+    // djust to center
     private int[] setStart(int[] occupied) {
         int lineTOReduce = occupied[0]/10;
         for (int i: occupied) if (i/10>lineTOReduce) lineTOReduce = i/10;
+        boolean has2 = false;
         boolean has3 = false;
         boolean has4 = false;
         boolean has5 = false;
         boolean has6 = false;
+        boolean has7 = false;
         for (int i = 0; i < 4; i++) {
             occupied[i] = occupied[i] - lineTOReduce * 10 + 3;
-            if ((occupied[i]+30)%10 == 3) has3 = true;
-            if ((occupied[i]+30)%10 == 4) has4 = true;
-            if ((occupied[i]+30)%10 == 5) has5 = true;
-            if ((occupied[i]+30)%10 == 6) has6 = true;
+            int col = (occupied[i]+30)%10;
+            has2 |= col == 2;
+            has3 |= col == 3;
+            has4 |= col == 4;
+            has5 |= col == 5;
+            has6 |= col == 6;
+            has7 |= col == 7;
         }
-        if (has4 && !has5) for (int i = 0; i < 4; i++) occupied[i] += 1;
-        if (!has4 && has5) for (int i = 0; i < 4; i++) occupied[i] -= 1;
+        if (has4 && !has5 || has2) for (int i = 0; i < 4; i++) occupied[i] += 1;
+        if (!has4 && has5 || has7) for (int i = 0; i < 4; i++) occupied[i] -= 1;
         if (!has4 && !has5 && has3) for (int i = 0; i < 4; i++) occupied[i] += 2;
         if (!has4 && !has5 && has6) for (int i = 0; i < 4; i++) occupied[i] -= 2;
         return occupied;
