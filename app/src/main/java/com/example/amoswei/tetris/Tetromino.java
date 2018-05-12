@@ -2,7 +2,6 @@ package com.example.amoswei.tetris;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 
 public class Tetromino {
     private TetrominoType tetrominoType;
@@ -80,7 +79,7 @@ public class Tetromino {
 
         float topEdge = (float) 0;
         float leftEdge = (float) 0;
-        float hBoard = (float) 0.9;
+        float hBoard = (float) 0.9*h;
         float wBoard = hBoard/2;
         float side = wBoard/10;
 
@@ -136,15 +135,21 @@ public class Tetromino {
     private int[] setStart(int[] occupied) {
         int lineTOReduce = occupied[0]/10;
         for (int i: occupied) if (i/10>lineTOReduce) lineTOReduce = i/10;
+        boolean has3 = false;
         boolean has4 = false;
         boolean has5 = false;
+        boolean has6 = false;
         for (int i = 0; i < 4; i++) {
+            occupied[i] = occupied[i] - lineTOReduce * 10 + 3;
+            if ((occupied[i]+30)%10 == 3) has3 = true;
             if ((occupied[i]+30)%10 == 4) has4 = true;
             if ((occupied[i]+30)%10 == 5) has5 = true;
-            occupied[i] = occupied[i] - lineTOReduce * 10 + 3;
+            if ((occupied[i]+30)%10 == 6) has6 = true;
         }
         if (has4 && !has5) for (int i = 0; i < 4; i++) occupied[i] += 1;
         if (!has4 && has5) for (int i = 0; i < 4; i++) occupied[i] -= 1;
+        if (!has4 && !has5 && has3) for (int i = 0; i < 4; i++) occupied[i] += 2;
+        if (!has4 && !has5 && has6) for (int i = 0; i < 4; i++) occupied[i] -= 2;
         return occupied;
     }
 
