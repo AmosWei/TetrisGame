@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.util.Log;
 
 public class Tetromino {
     private TetrominoType tetrominoType;
@@ -131,18 +130,16 @@ public class Tetromino {
             int iY = -((occupied[i]+30)%10-centerX)+centerY;
             if (((iX<0?iX+10:iX)>9?((iX<0?iX+10:iX)-10):(iX<0?iX+10:iX)) - centerX >= 6) move = 2;
             if (centerX - ((iX<0?iX+10:iX)>9?((iX<0?iX+10:iX)-10):(iX<0?iX+10:iX)) >= 6) move = 1;
-            Log.d("move option in rotate", Integer.toString(move) + " " + Integer.toString(centerX)
-            + " " + Integer.toString(iX));
             newOccupied[i] = iX + iY*10;
         }
-        // TODO move twice for I tetromino
-        if (move == 2) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]+1;
+        // move twice for I tetromino for some cases
+        if (tetrominoType == TetrominoType.I && centerX%10 == 9 && orientation == 3) move = 3;
+        if (tetrominoType == TetrominoType.I && centerX%10 == 0 && orientation == 1) move = 4;
         if (move == 1) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]-1;
+        if (move == 2) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]+1;
+        if (move == 3) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]-2;
+        if (move == 4) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]+2;
         boolean canRotate = true;
-        Log.d("rotated option", Integer.toString(newOccupied[0]) + " " +
-                Integer.toString(newOccupied[1]) + " " +
-                Integer.toString(newOccupied[2]) + " " +
-                Integer.toString(newOccupied[3]));
         for (int i: newOccupied)
             if (i >= 0 && game.getStoppedOnBoard()[i] != -1)
                 canRotate = false;
@@ -193,7 +190,6 @@ public class Tetromino {
                 break;
             }
         }
-        Log.d("dontmove(left)", Boolean.toString(dontmove));
         if (dontmove) return;
         for (int i = 0; i < 4; i++) newOccupied[i] = occupied[i]-1;
         occupied = newOccupied;
@@ -211,7 +207,6 @@ public class Tetromino {
                 break;
             }
         }
-        Log.d("dontmove(right)", Boolean.toString(dontmove));
         if (dontmove) return;
         for (int i = 0; i < 4; i++) newOccupied[i] = occupied[i]+1;
         occupied = newOccupied;
