@@ -13,12 +13,6 @@ public class Tetromino {
     private Tetris game;
     private boolean current = false;
 
-    public String toString() {
-        return "Tetromino: " + tetrominoType.name() + " " + Integer.toString(orientation) + " " +
-                Integer.toString(color) + " " + occupied[0] + " " + occupied[1] + " " + occupied[2]
-                + " " + occupied[3] + " " + stop;
-    }
-
     Tetromino(TetrominoType type, int orientation, int color, Tetris game) {
         this.tetrominoType = type;
         if (type == TetrominoType.I && orientation == 1) orientation = 3;
@@ -26,8 +20,11 @@ public class Tetromino {
         this.color = color;
         this.game = game;
         occupied = type.getInitialOccupied();
-        for (int i = 0; i < this.orientation; i++)
+        Log.d("game", toString());
+        for (int i = 0; i < this.orientation; i++) {
             occupied = rotate(occupied);
+            Log.d("game", toString());
+        }
         occupied = setStart(occupied);
     }
 
@@ -51,7 +48,7 @@ public class Tetromino {
             for (int i : occupied)
                 drawGrid(c, i, side, leftEdge, topEdge, p);
         }
-        else {
+        else {          // TODO position is wrong
             float rightPadding = (float) (w - 0.1*w - 0.7*h/2);
             float centerNextX = rightPadding/2;
             float centerNextY = (float) (0.3*h);
@@ -70,8 +67,26 @@ public class Tetromino {
         }
     }
 
+    static void drawGrid(Canvas c, int i, int color) {
+        Paint p = new Paint();
+        p.setColor(color);
+        p.setStyle(Paint.Style.FILL);
+
+        int h = c.getHeight();
+        int w = c.getWidth();
+
+        float topEdge = (float) (h*0.1);
+        float leftEdge = (float) (w*0.1);
+        float hBoard = (float) (h*0.7);
+        float wBoard = hBoard/2;
+        float side = wBoard/10;
+
+        drawGrid(c, i, side, leftEdge, topEdge, p);
+    }
+
+
     // pass in more arguments (actually can be inferred from c, but can reduce duplicate)
-    private void drawGrid(Canvas c, int i, float side, float leftEdge, float topEdge, Paint p) {
+    private static void drawGrid(Canvas c, int i, float side, float leftEdge, float topEdge, Paint p) {
         if (i < 0) return;
         double x = i%10;
         double y = i/10;
@@ -95,8 +110,8 @@ public class Tetromino {
         int centerY = occupied[1]/10;
         int move = 0;  // 0 if not move; 1 if move left; 2 if move right
         for (int i = 0; i < 4; i++) {
-            int iX = (occupied[i]/10-centerY)+centerX; // iX and iY here are new positions (rotated)
-            int iY = -(occupied[i]%10-centerX)+centerY;
+            int iX = ((occupied[i]+20)/10-2-centerY)+centerX; // iX and iY here are new positions (rotated)
+            int iY = -((occupied[i]+20)%10-centerX)+centerY;
             if (iX - centerX >= 6) move = 2;
             if (centerX - iX >= 6) move = 1;
             newOccupied[i] = iX + iY*10;
@@ -117,7 +132,7 @@ public class Tetromino {
         int lineTOReduce = occupied[0]/10;
         for (int i: occupied) if (i/10>lineTOReduce) lineTOReduce = i/10;
         for (int i = 0; i < occupied.length; i++)
-            occupied[i] = occupied[i] - lineTOReduce*10 + 4;
+            occupied[i] = occupied[i] - lineTOReduce*10 + 3;
         return occupied;
     }
 
@@ -161,7 +176,6 @@ public class Tetromino {
         checkStop();
         for (int i = 0; i < 4 && !stop; i++)
             occupied[i] += 10;
-        Log.d("game", this.toString());
     }
 
     // move down once to the most bottom position it can be in
@@ -172,7 +186,6 @@ public class Tetromino {
 
     private void checkStop() {
         for (int i: occupied) {
-            Log.d("game", Integer.toString(i) + " " + (i>=0?game.getTopOfEachCol()[i%10]:""));
             if (i >= 0 && game.getTopOfEachCol()[i%10] == i/10+1) {
                 stop = true;
             }
@@ -196,5 +209,9 @@ public class Tetromino {
         current = true;
     }
 
-
+    public String toString() {
+        return "Tetromino: " + tetrominoType.name() + " " + Integer.toString(orientation) + " " +
+                Integer.toString(color) + " " + occupied[0] + " " + occupied[1] + " " + occupied[2]
+                + " " + occupied[3] + " " + stop;
+    }
 }
