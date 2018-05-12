@@ -8,11 +8,11 @@ A simple Tetris game, Use Android to implentment.
 </p>
 Picture from [wikipeida](https://en.wikipedia.org/wiki/Tetris)
 
-## Getting Started
+## Game summary
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
+## Design summary
 
 What things you need to install the software and how to install them
 
@@ -20,7 +20,7 @@ What things you need to install the software and how to install them
 Give examples
 ```
 
-### Installing
+## UML Diagram
 
 A step by step series of examples that tell you have to get a development env running
 
@@ -38,7 +38,7 @@ until finished
 
 End with an example of getting some data out of the system or using it for a little demo
 
-## Running the tests
+### Testing summary
 
 Explain how to run the automated tests for this system
 
@@ -50,13 +50,17 @@ Explain what these tests test and why
 Give an example
 ```
 
-### And coding style tests
+### Statement of Originality
 
-Explain what these tests test and why
+We declare that the work we have submitted for assignment one is entirely our own work, with the following documented exceptions:
 
-```
-Give an example
-```
+*
+
+* Uses an idea suggested by Stackoverfollow.
+
+Signed: Wangchao Wei u6263937
+Signed:
+Signed:
 
 ## Built With
 
