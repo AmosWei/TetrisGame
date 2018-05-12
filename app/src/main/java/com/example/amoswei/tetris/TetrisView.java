@@ -1,7 +1,6 @@
 package com.example.amoswei.tetris;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -9,13 +8,13 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import static android.support.v4.app.ActivityCompat.startActivity;
 
 public class TetrisView extends View implements Runnable{
-    public static final int STEPDELAY = 1000;
+    public static int STEPDELAY = 1000;
     Handler repaintHandler;
     Tetris game;
-    ArrayList<GameOver> observers ;
+    ArrayList<GameOver> observers;
+
 
     public TetrisView(Context context, AttributeSet attrs) {
         super(context, attrs);

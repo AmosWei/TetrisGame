@@ -1,9 +1,13 @@
 package com.example.amoswei.tetris;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -27,6 +31,7 @@ public class Tetris{
     int score;
 
     private boolean over;
+    private boolean paused = false;
 
     private Canvas c;
 
@@ -50,7 +55,9 @@ public class Tetris{
     // draw current and next
     void draw(Canvas c) {
         this.c = c;
+        drawScore();
         drawBackGround();
+        drawScore();
         for (int i = 0; i < 200; i++) {
             if (stoppedOnBoard[i] == -1) continue;
             drawGrid(c, i, stoppedOnBoard[i]);
@@ -69,13 +76,29 @@ public class Tetris{
         frame.setColor(Color.rgb(255, 255, 255));
         c.drawRect(0, 0, w, h, frame);
         c.drawRect((float) 0, (float) 0,
-                (float) (0.45 * h), (float) 0.9 * h, background);
+                (float) (0.45*h), (float) 0.9*h, background);
+    }
+
+    private void drawScore() {
+        int h = c.getHeight();
+        int w = c.getWidth();
+
+        Paint scoreText = new Paint();
+        scoreText.setColor(Color.rgb(0, 0,0));
+        scoreText.setTextSize(75);
+        c.drawText(score + "", (float) (0.47*h), (float) 0.1*w, scoreText);
+    }
+
+    public void pause() {
+        paused = !paused;
     }
 
     void step() {
-        current.moveDown();
-        if (current.getStop())
-            triggerNextTetromino();
+        if (!paused) {
+            current.moveDown();
+            if (current.getStop())
+                triggerNextTetromino();
+        }
     }
 
     private void triggerNextTetromino() {

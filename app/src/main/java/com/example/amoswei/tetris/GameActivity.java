@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import static com.example.amoswei.tetris.GameOverActivity.GAMEOVER_MESSAGE;
+import static com.example.amoswei.tetris.TetrisView.STEPDELAY;
 
 public class GameActivity extends AppCompatActivity implements GameOver {
     TetrisView tetrisView;
@@ -15,7 +16,7 @@ public class GameActivity extends AppCompatActivity implements GameOver {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tetris);
-        tetrisView = (TetrisView) findViewById(R.id.tetrisview);
+        tetrisView = findViewById(R.id.tetrisview);
         tetrisView.registerGameOver(this);
     }
 
@@ -33,6 +34,20 @@ public class GameActivity extends AppCompatActivity implements GameOver {
 
     public void rotate(View view) {
         tetrisView.game.updateBoardByEvent((short)0);
+    }
+
+    public void menu(View view) {
+        Intent menuIntent = new Intent(this, WelcomeActivity.class);
+        startActivity(menuIntent);
+    }
+
+    public void pause(View view) {
+        tetrisView.game.pause();
+    }
+
+    public void restart(View v) {
+        Intent restartIntent = new Intent(this, GameActivity.class);
+        startActivity(restartIntent);
     }
 
     @Override
