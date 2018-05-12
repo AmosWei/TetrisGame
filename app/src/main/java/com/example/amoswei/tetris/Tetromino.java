@@ -161,7 +161,7 @@ public class Tetromino {
 
     private void checkStop() {
         for (int i: occupied) {
-            if (game.getTopOfEachCol()[i%10] == i/10+1) {
+            if (i >= 0 && game.getTopOfEachCol()[i%10] == i/10+1) {
                 stop = true;
                 return;
             }
