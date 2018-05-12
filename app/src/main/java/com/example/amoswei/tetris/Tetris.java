@@ -14,7 +14,8 @@ import static com.example.amoswei.tetris.Tetromino.drawGrid;
 public class Tetris{
     // possible colors that can be randomly choose from
     private static ArrayList<Integer> colors = new ArrayList<>(Arrays.asList(Color.GREEN,
-            Color.CYAN, Color.GREEN, Color.YELLOW, Color.RED));
+            Color.CYAN, Color.GREEN, Color.YELLOW, Color.RED, Color.BLUE, Color.MAGENTA,
+            Color.DKGRAY));
 
     private static Random rand = new Random();
 
@@ -65,7 +66,7 @@ public class Tetris{
 
         Paint background = new Paint();
         Paint frame = new Paint();
-        background.setColor(Color.rgb(0, 0, 0));
+        background.setColor(Color.rgb(211, 218, 229));
         frame.setColor(Color.rgb(255, 255, 255));
         c.drawRect(0, 0, w, h, frame);
         c.drawRect((float) 0.01 * w, (float) 0.03 * h,
