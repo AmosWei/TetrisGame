@@ -15,7 +15,8 @@ public class Tetromino {
 
     Tetromino(TetrominoType type, int orientation, int color, Tetris game) {
         this.tetrominoType = type;
-        if (type == TetrominoType.I && orientation == 1) orientation = 3;
+        if (type == TetrominoType.I && orientation == 3) orientation = 1;
+        if (type == TetrominoType.O) orientation = 0;
         this.orientation = orientation;
         this.color = color;
         this.game = game;
@@ -97,7 +98,8 @@ public class Tetromino {
     // set "orientation" field as well
     // this is to be called by other class
     void setRotate() {
-        orientation = (orientation+1)%3;
+        if (tetrominoType == TetrominoType.O) return;
+        orientation = (orientation+1)%4;
         occupied = rotate(occupied);
     }
 
@@ -110,8 +112,8 @@ public class Tetromino {
         int centerY = occupied[1]/10;
         int move = 0;  // 0 if not move; 1 if move left; 2 if move right
         for (int i = 0; i < 4; i++) {
-            int iX = ((occupied[i]+20)/10-2-centerY)+centerX; // iX and iY here are new positions (rotated)
-            int iY = -((occupied[i]+20)%10-centerX)+centerY;
+            int iX = ((occupied[i]+30)/10-3-centerY)+centerX; // iX and iY here are new positions (rotated)
+            int iY = -((occupied[i]+30)%10-centerX)+centerY;
             if (iX - centerX >= 6) move = 2;
             if (centerX - iX >= 6) move = 1;
             newOccupied[i] = iX + iY*10;
