@@ -160,7 +160,7 @@ public class Tetris{
 
     // update the top of each column (from the stopped on Board)
     // set over attribute to true if game over
-    // set to initial value if the column has no grid occupied
+    // set to initial value if the column has no grid occupi ed
     private void updateTopOfEachCol() {
         if (current == null) return;
         for (int i = 0; i < 10; i++)

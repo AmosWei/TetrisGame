@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.util.Log;
 
 public class Tetromino {
     private TetrominoType tetrominoType;
@@ -59,7 +58,7 @@ public class Tetromino {
             float rightPadding = w - leftEdge - wBoard;
             float centerNextX = w-rightPadding/2;
             float centerNextY = (float) (0.3*h);
-            side *= 0.7;
+            side *= 0.5;
             float hside = side/2;
             int center = next[1];
             int centerX = center%10;
@@ -122,18 +121,24 @@ public class Tetromino {
     // need to check whether obstructed by other stopped position (if not, rotate once more)
     private int[] rotate(int[] occupied) {
         int[] newOccupied = new int[4];
-        int centerX = occupied[1]%10;
-        int centerY = occupied[1]/10;
-        int move = 0;  // 0 if not move; 1 if move left; 2 if move right
+        int centerX = (occupied[1]+30)%10;
+        int centerY = (occupied[1]+30)/10-3;
+        int move = 0; // 0 if not move; 1 if move left; 2 if move right;
+                      // 3 if move left twice; 4 if move right twice
         for (int i = 0; i < 4; i++) {
             int iX = ((occupied[i]+30)/10-3-centerY)+centerX; // iX and iY here are new positions (rotated)
             int iY = -((occupied[i]+30)%10-centerX)+centerY;
-            if (iX - centerX >= 6) move = 2;
-            if (centerX - iX >= 6) move = 1;
+            if (((iX<0?iX+10:iX)>9?((iX<0?iX+10:iX)-10):(iX<0?iX+10:iX)) - centerX >= 6) move = 2;
+            if (centerX - ((iX<0?iX+10:iX)>9?((iX<0?iX+10:iX)-10):(iX<0?iX+10:iX)) >= 6) move = 1;
             newOccupied[i] = iX + iY*10;
         }
-        if (move == 2) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]+1;
+        // move twice for I tetromino for some cases
+        if (tetrominoType == TetrominoType.I && centerX%10 == 9 && orientation == 3) move = 3;
+        if (tetrominoType == TetrominoType.I && centerX%10 == 0 && orientation == 1) move = 4;
         if (move == 1) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]-1;
+        if (move == 2) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]+1;
+        if (move == 3) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]-2;
+        if (move == 4) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]+2;
         boolean canRotate = true;
         for (int i: newOccupied)
             if (i >= 0 && game.getStoppedOnBoard()[i] != -1)
@@ -185,7 +190,6 @@ public class Tetromino {
                 break;
             }
         }
-        Log.d("moveLeft", Boolean.toString(dontmove));
         if (dontmove) return;
         for (int i = 0; i < 4; i++) newOccupied[i] = occupied[i]-1;
         occupied = newOccupied;
