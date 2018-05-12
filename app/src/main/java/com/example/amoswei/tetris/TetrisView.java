@@ -3,18 +3,11 @@ package com.example.amoswei.tetris;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import static android.support.v4.app.ActivityCompat.startActivity;
 
@@ -31,6 +24,11 @@ public class TetrisView extends View implements Runnable{
 
         repaintHandler = new Handler();
         repaintHandler.postDelayed(this, STEPDELAY);
+    }
+
+    public void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        game.draw(canvas);
     }
 
     // step the view forward by one step - true is returned if more steps to go

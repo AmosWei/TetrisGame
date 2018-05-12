@@ -46,8 +46,8 @@ public class Tetris{
     // TODO draw stoppedOnBoard grids
     // draw current and next
     void draw(Canvas c) {
-        drawBackGround();
         this.c = c;
+        drawBackGround();
         current.draw(c);
         next.draw(c);
     }
