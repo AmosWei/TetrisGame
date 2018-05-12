@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="76" />
+                                                <entry key="scalingPercent" value="161" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -34,7 +34,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="102" />
+                                                <entry key="scalingPercent" value="200" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -46,7 +46,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="edd6c0" />
-                                                <entry key="scalingPercent" value="129" />
+                                                <entry key="scalingPercent" value="141" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -57,7 +57,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="fontFamily" value="Gurmukhi MT" />
+                                                <entry key="fontFamily" value="Optima" />
                                                 <entry key="text" value="Tetris" />
                                               </map>
                                             </option>
@@ -68,11 +68,10 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="8d8ba6" />
-                                      <entry key="backgroundImage" value="$USER_HOME$/Desktop/index.png" />
+                                      <entry key="backgroundImage" value="$USER_HOME$/Desktop/tetris.jpg" />
                                       <entry key="foregroundAssetType" value="TEXT" />
-                                      <entry key="foregroundImage" value="$USER_HOME$/Desktop/T_icon.png" />
+                                      <entry key="foregroundImage" value="$USER_HOME$/Desktop/tetris.jpg" />
                                     </map>
                                   </option>
                                 </PersistentState>
