@@ -20,7 +20,7 @@ public class Tetris{
     private static Random rand = new Random();
 
     private int[] stoppedOnBoard = new int[200];  // element as color, -1 if nothing there
-    private int[] topOfEachCol = {20, 20, 20, 20, 20, 20, 20, 20, 20, 20};   // 20 if nothing in this column
+    private int[] topOfEachCol = new int[10];   // 20 if nothing in this column
 
     private Tetromino current;
     private Tetromino next;
@@ -47,7 +47,7 @@ public class Tetris{
     // to be called on each step (through view.invalidate())
     // draw background of board
     // TODO buttons (might be pictures) & score
-    // TODO draw stoppedOnBoard grids
+    // draw stoppedOnBoard grids
     // draw current and next
     void draw(Canvas c) {
         this.c = c;
@@ -60,7 +60,7 @@ public class Tetris{
         next.draw(c);
     }
 
-    void drawBackGround() {
+    private void drawBackGround() {
         int h = c.getHeight();
         int w = c.getWidth();
 
@@ -69,8 +69,8 @@ public class Tetris{
         background.setColor(Color.rgb(211, 218, 229));
         frame.setColor(Color.rgb(255, 255, 255));
         c.drawRect(0, 0, w, h, frame);
-        c.drawRect((float) 0.01 * w, (float) 0.03 * h,
-                (float) (0.01 * w + 0.44 * h), (float) 0.91 * h, background);
+        c.drawRect((float) 0, (float) 0,
+                (float) (0.45 * h), (float) 0.9 * h, background);
     }
 
     void step() {
@@ -114,7 +114,6 @@ public class Tetris{
     // update the stopped grid on board if some line(s) need to be eliminated
     // otherwise keep it the same
     // add score = (lines to be eliminated) ^ 2
-    // TODO set to initial value if the column has no grid occupied
     private void eliminate() {
         int eliminatedCount = 0;
         for (int i = 0; i < 20; i++) {
@@ -140,10 +139,13 @@ public class Tetris{
 
     // update the top of each column (from the stopped on Board)
     // set over attribute to true if game over
+    // set to initial value if the column has no grid occupied
     private void updateTopOfEachCol() {
         if (current == null) return;
-        for (int i: current.getOccupied()) {
-            if (i < 0) continue;
+        for (int i = 0; i < 10; i++)
+            topOfEachCol[i] = 20;
+        for (int i = 0; i < 200; i++) {
+            if (stoppedOnBoard[i] == -1) continue;
             int c = i%10;
             if (topOfEachCol[c] > i/10)
                 topOfEachCol[c] = i/10;
