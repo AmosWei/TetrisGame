@@ -3,21 +3,36 @@ package com.example.amoswei.tetris;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import static com.example.amoswei.tetris.GameOverActivity.GAMEOVER_MESSAGE;
 
 public class GameActivity extends AppCompatActivity implements GameOver {
+    TetrisView tetrisView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tetris);
-        TetrisView tetrisView = (TetrisView) findViewById(R.id.tetrisview);
+        tetrisView = (TetrisView) findViewById(R.id.tetrisview);
         tetrisView.registerGameOver(this);
-        Log.d("game", "tetrisview created");
+    }
 
+    public void moveLeft(View view) {
+        tetrisView.game.updateBoardByEvent((short)1);
+    }
+
+    public void moveRight(View view) {
+        tetrisView.game.updateBoardByEvent((short)2);
+    }
+
+    public void moveDownFast(View view) {
+        tetrisView.game.updateBoardByEvent((short)3);
+    }
+
+    public void rotate(View view) {
+        tetrisView.game.updateBoardByEvent((short)0);
     }
 
     @Override

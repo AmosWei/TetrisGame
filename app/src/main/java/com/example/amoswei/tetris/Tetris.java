@@ -45,7 +45,7 @@ public class Tetris{
 
     // to be called on each step (through view.invalidate())
     // draw background of board
-    // TODO buttons (might be pictures) & score
+    // TODO score
     // draw stoppedOnBoard grids
     // draw current and next
     void draw(Canvas c) {

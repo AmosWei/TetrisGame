@@ -31,6 +31,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
         android:background="@drawable/left"
+        android:onClick="moveLeft"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -41,6 +42,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="24dp"
         android:background="@drawable/down"
+        android:onClick="moveDownFast"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button" />
 
@@ -51,6 +53,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="24dp"
         android:background="@drawable/right"
+        android:onClick="moveRight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button4" />
 
@@ -61,6 +64,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/rotate"
+        android:onClick="rotate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
