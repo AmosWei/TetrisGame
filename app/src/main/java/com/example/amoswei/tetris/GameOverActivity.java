@@ -13,8 +13,8 @@ public class GameOverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameover);
-        TextView gameOverText = (TextView) findViewById(R.id.gameovermessage);
-        gameOverText.setText(getIntent().getStringExtra(GAMEOVER_MESSAGE));
+//        TextView gameOverText = (TextView) findViewById(R.id.gameovermessage);
+//        gameOverText.setText(getIntent().getStringExtra(GAMEOVER_MESSAGE));
     }
 
     public void playAgain(View v) {
