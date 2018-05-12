@@ -59,7 +59,7 @@ public class Tetromino {
             float rightPadding = w - leftEdge - wBoard;
             float centerNextX = w-rightPadding/2;
             float centerNextY = (float) (0.3*h);
-            side *= 0.7;
+            side *= 0.5;
             float hside = side/2;
             int center = next[1];
             int centerX = center%10;
