@@ -18,7 +18,7 @@ public class TetrisView extends View implements Runnable{
 
     public TetrisView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        observers = new ArrayList<GameOver>();
+        observers = new ArrayList<>();
         game = new Tetris();
 
         repaintHandler = new Handler();
@@ -28,6 +28,11 @@ public class TetrisView extends View implements Runnable{
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         game.draw(canvas);
+    }
+
+    public void boardEvent(short option) {
+        game.updateBoardByEvent(option);
+        this.invalidate();
     }
 
     // step the view forward by one step - true is returned if more steps to go
