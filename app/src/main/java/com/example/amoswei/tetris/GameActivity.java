@@ -36,6 +36,7 @@ public class GameActivity extends AppCompatActivity implements GameOver {
     public void menu(View view) {
         Intent menuIntent = new Intent(this, WelcomeActivity.class);
         startActivity(menuIntent);
+        finish();
     }
 
     public void pause(View view) {
@@ -45,6 +46,7 @@ public class GameActivity extends AppCompatActivity implements GameOver {
     public void restart(View v) {
         Intent restartIntent = new Intent(this, GameActivity.class);
         startActivity(restartIntent);
+        finish();
     }
 
     @Override
