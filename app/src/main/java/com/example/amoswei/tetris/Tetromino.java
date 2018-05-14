@@ -133,8 +133,8 @@ public class Tetromino {
             newOccupied[i] = iX + iY*10;
         }
         // move twice for I tetromino for some cases
-        if (tetrominoType == TetrominoType.I && centerX%10 == 9 && orientation == 3) move = 3;
-        if (tetrominoType == TetrominoType.I && centerX%10 == 0 && orientation == 1) move = 4;
+        if (tetrominoType == TetrominoType.I && centerX%10 == 9 && orientation == 0) move = 3;
+        if (tetrominoType == TetrominoType.I && centerX%10 == 0 && orientation == 2) move = 4;
         if (move == 1) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]-1;
         if (move == 2) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]+1;
         if (move == 3) for (int i = 0; i < 4; i++) newOccupied[i] = newOccupied[i]-2;
