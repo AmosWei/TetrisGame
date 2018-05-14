@@ -41,11 +41,11 @@ until finished
 
 End with an example of getting some data out of the system or using it for a little demo
 
-### Testing summary
+## Testing summary
 
 Explain how to run the automated tests for this system
 
-### Break down into end to end tests
+## Break down into end to end tests
 
 Explain what these tests test and why
 
@@ -59,7 +59,7 @@ Give an example
 * Thursday, Week 11
 
 
-### Statement of Originality
+## Statement of Originality
 
 We declare that the work we have submitted for assignment one is entirely our own work, with the following documented exceptions:
 
