@@ -220,9 +220,9 @@ public class Tetromino {
             occupied[i] += 10;
     }
 
-    // move down once to the most bottom position it can be in
+    // move down faster (3 lines at a time)
     void moveDownFast() {
-        while (!stop)
+        for (int i = 0; i < 3 && !stop; i++)
             moveDown();
     }
 
