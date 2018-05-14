@@ -52,7 +52,7 @@ Explain what these tests test and why
 ```
 Give an example
 ```
-##Team meeting schedule
+## Team meeting schedule
 * Friday, Week 10
 * Saturday,  Week 10
 * Monday, Week 11
