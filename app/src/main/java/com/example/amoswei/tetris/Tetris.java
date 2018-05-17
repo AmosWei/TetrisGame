@@ -1,13 +1,9 @@
 package com.example.amoswei.tetris;
 
-import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -15,7 +11,7 @@ import java.util.Random;
 import static com.example.amoswei.tetris.Tetromino.drawGrid;
 
 public class Tetris{
-    // possible colors that can be randomly choose from
+    // possible colors that can be randomly chosen from
     private static ArrayList<Integer> colors = new ArrayList<>(Arrays.asList(Color.GREEN,
             Color.CYAN, Color.GREEN, Color.YELLOW, Color.RED, Color.BLUE, Color.MAGENTA,
             Color.DKGRAY));
@@ -124,7 +120,7 @@ public class Tetris{
     }
 
     // update the stopped grid on board based on current Tetromino (which just stops)
-    private void updateBoard() {
+    public void updateBoard() {
         if (current == null) return;
         int[] currentOccupied = current.getOccupied();
         for (int i: currentOccupied)
@@ -135,7 +131,7 @@ public class Tetris{
     // update the stopped grid on board if some line(s) need to be eliminated
     // otherwise keep it the same
     // add score = (lines to be eliminated) ^ 2
-    private void eliminate() {
+    public void eliminate() {
         int eliminatedCount = 0;
         for (int i = 0; i < 20; i++) {
             boolean allOccupied = true;
@@ -186,5 +182,9 @@ public class Tetris{
 
     boolean getOver() {
         return over;
+    }
+
+    public void setCurrent(Tetromino tetromino) {
+        current = tetromino;
     }
 }

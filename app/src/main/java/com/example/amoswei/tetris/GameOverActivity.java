@@ -20,6 +20,7 @@ public class GameOverActivity extends AppCompatActivity {
     public void playAgain(View v) {
         Intent playAgainIntent = new Intent(this, GameActivity.class);
         startActivity(playAgainIntent);
+        finish();
     }
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {

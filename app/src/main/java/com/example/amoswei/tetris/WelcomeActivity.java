@@ -18,6 +18,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
+        finish();
     }
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
