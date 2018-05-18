@@ -29,7 +29,11 @@ the movment or rotate the piece. The mark you gain will be recorded, and will sh
 ![UML](UML.png)
 
 ## Testing summary
+We mainly need testing for two classes: Tetromino and Tetris.
 
+Tetromino class is mainly for encoding state of each piece of tetromino. The key methods in it is moving the Tetromino left, right, down and rotate. We tested them independently both in normal state and situations with obstructions. During testing, we actually found bug in rotating Tetromino of type I. When it is in left most or right most positions on board, it was likely to rotate into wrong positions. The bug is fixed now.
+
+Tetris class contains all the information of occupied grids. So the most important function here is update board. We emphasized on testing this method in different situations and it successfully passed all tests.
 
 ## Design summary
 Explain how to run the automated tests for this system
