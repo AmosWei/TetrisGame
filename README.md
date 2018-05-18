@@ -11,14 +11,14 @@ Picture from [wikipeida](https://en.wikipedia.org/wiki/Tetris)
 Screen shot of the game
 
 * Welcome page
-![1](2.png=100x20)
-* Playing the game!
-![1](3.png=100x20)
-* Continue play
-![1](4.png =100x20)
-* Game over page
-![1](5.png =100x20)
+<img src="2.png" width="200">
 
+* Playing the game!
+<img src="3.png" width="200">
+* Continue play
+<img src="4.png" width="200">
+* Game over page
+<img src="5.png" width="200">
 
 
 
