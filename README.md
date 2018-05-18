@@ -30,8 +30,19 @@ the movment or rotate the piece. The mark you gain will be recorded, and will sh
 
 ## Testing summary
 
+
+## Design summary
 Explain how to run the automated tests for this system
 
+We mainly have four key issues to deal with during the design of Tetris game. They involves encoding Tetromino state, moving Tetromino, encoding Tetris game state and GUI drawing.
+
+The first issue came to us is how to encode each Tetromino. For each piece, properties including four grids positions, orientation and color are saved in the program. We did this by creating a Tetromino class, with these attributes in it and several helper functions.
+
+Then it comes to rotating, moving left and right, moving down the Tetromino. The idea is basically just add or subtract some value of positions. But it could be more complicated when the Tetromino is not abstract. When they are in a real game, obstructions can happen anywhere. This requires the information of the whole game state.
+
+At this point, we need a Tetris class to encode game state. The Tetris class holds information of all stopped Tetromino and moving Tetromino. Stopped ones are not to be saved as Tetrominos, since some part of one Tetromino is possibly to be eliminated so grids are actually independent when stopped. An array is kept as an attribute in Tetris to represent all the stopped grids with their colors as element value. Once the currently moving Tetromino needs to stop, the array is updated and next Tetromino is triggered.
+
+As for GUI drawing, they are throughout the whole project. We have draw methods in Tetromino, Tetris and TetrisView. The latter one calls the draw method of the former one and add some more features specifically in that case. One tricky point is how to adjust the layout. We tried to optimize this by setting both in java class file and xml files. Another tricky point is that we need to finish the previous activity when starting a new one.
 
 ## Team meeting schedule
 * Friday, Week 10
