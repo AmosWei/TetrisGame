@@ -8,14 +8,16 @@ A simple Tetris game, Use Android to implentment.
 Picture from [wikipeida](https://en.wikipedia.org/wiki/Tetris)
 
 ## Game summary
+Screen shot of the game
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-
-
-##Design Summary
-
-
+* Welcome page
+![1](2.png)
+* Playing the game!
+![1](3.png)
+* Continue play
+![1](4.png)
+* Game over page
+![1](5.png)
 
 
 
