@@ -20,7 +20,7 @@ Screen shot of the game
 * Game over page
 <img src="5.png" width="200">
 
-The game have three main activities which is Welcome, Playing, and Gameover. We you start play the game, by clicking the Play button, you are into the playing 
+The game have three main activities which is Welcome, Playing, and Gameover. By clicking the Play button, you are into the playing 
 state, there are three buttons in the right you can click, which can be restart, pause or back to welcome page. And three control buttons in the bottom which can adjust
 the movment or rotate the piece. The mark you gain will be recorded, and will show the final marks in the gameover activity page when the game is over.
 
